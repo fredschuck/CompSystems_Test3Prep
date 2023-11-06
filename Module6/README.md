@@ -16,9 +16,48 @@ Example:
 # Unit 1
 
 ## Memory Layout of a Program
+<!-- Discuss where memory is stored. For example, the memory for an array's elements is stored in stack. Dynamically allocated memory using malloc is in heap. -->
+- There is a stack size limit, so `A[10,000]` won't work.
+
 ## Levels of Program Code
+- High-Level Language:
+    - Level of abstraction closer to problem domain
+    - Provides for productivity and portability
+- Machine-Level Code:
+    - Textual representation of binary instructions
+    - Interface between hardware and software
+    - Assembly
+- Harware-Level Code:
+    - Binary digits (bits)
+    - Encoded instructions and data
+
+## The RISC-V Instruction Set Architecture (ISA)
 ## Registers vs Memory
+- Registers are faster than memory
+
 ## Register Operands
+- Three kinds of operands:
+    1. Register Operands (x0 - x31)
+    2. Immediate Operands (0, 10, -8)
+    3. Memory Operands (0(x1), 16(x2), -8(x3))
+
+- Three classes of instructions:
+    1. Arithmetic-logic instructions (add, sub, addi, slli)
+    2. Memory load/store instructions (lw/sw, ld/sd)
+    3. Control transfer instructions (beq, jal, jr)
+
+- Register file is 32 x 64 bits
+    - x0 is hardwired to 0
+    - x1-x31 are general purpose registers
+    - x1: return address of a function
+    - x2: stack pointer of a function
+    - x3: global pointer
+    - x4: thread pointer
+    - x5-x7, x28-x31: temporary registers
+    - x8: frame pointer
+    - x9, x18-x27: saved registers
+    - x10-x11: function arguments and results
+    - x12-x17: function arguments
 
 
 
