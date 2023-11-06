@@ -15,6 +15,10 @@ Example:
 - r3 = r2 + r1
 # Unit 1
 
+## Memory Layout of a Program
+## Levels of Program Code
+## Registers vs Memory
+## Register Operands
 
 
 
