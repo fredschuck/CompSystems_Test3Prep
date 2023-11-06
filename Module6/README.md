@@ -37,14 +37,14 @@ Example:
 
 ## Register Operands
 - Three kinds of operands:
-    1. Register Operands (x0 - x31)
-    2. Immediate Operands (0, 10, -8)
-    3. Memory Operands (0(x1), 16(x2), -8(x3))
+    1) Register Operands (x0 - x31)
+    2) Immediate Operands (0, 10, -8)
+    3) Memory Operands (0(x1), 16(x2), -8(x3))
 
 - Three classes of instructions:
-    1. Arithmetic-logic instructions (add, sub, addi, slli)
-    2. Memory load/store instructions (lw/sw, ld/sd)
-    3. Control transfer instructions (beq, jal, jr)
+    1) Arithmetic-logic instructions (add, sub, addi, slli)
+    2) Memory load/store instructions (lw/sw, ld/sd)
+    3) Control transfer instructions (beq, jal, jr)
 
 - Register file is 32 x 64 bits
     - x0 is hardwired to 0
