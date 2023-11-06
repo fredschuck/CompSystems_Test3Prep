@@ -25,7 +25,7 @@ Example:
 # Unit 2
 
 ## Load-Store Architecture
-- [Load-Store Architecture](https://en.wikipedia.org/wiki/Load–store_architecture)
+[Load-Store Architecture](https://en.wikipedia.org/wiki/Load–store_architecture)
 - Divides instructions into two categories:
     - Memory Access: Load and store bethween memory and registers
     - ALU Operations: Operate on data between registers only
@@ -39,7 +39,7 @@ Example:
 - Many GPU's also use this architecture
 
 ## Register-Memory Architecture
-- [Register-Memory Architecture](https://en.wikipedia.org/wiki/Register–memory_architecture)
+[Register-Memory Architecture](https://en.wikipedia.org/wiki/Register–memory_architecture)
 - Instruction set architecture that allows operations to be performed on/from memory, as well as registers (a.k.a. "Register-Plus-Memory" architecture)
 - In a register–memory approach one of the operands for operations such as the ADD operation may be in memory, while the other is in a register. 
 - Examples of Register-Memory Architecture:
@@ -49,12 +49,13 @@ Example:
     - IBM System/360
 
 ## Memory-Wall Problem
-- [Memory-Wall Problem](https://developer20.com/memory-wall-problem/)
+[Memory-Wall Problem](https://developer20.com/memory-wall-problem/)
 - The memory wall is a problem that occurs when the processor’s speed outpaces the rate at which data can be transferred to and from the memory system.
 - To mitigate this problem, L-Cache was introduced. They are SRAMs that are placed between the CPU and the main memory. They are faster than the main memory and smaller in size.
 
 ## Dynamic RAM (DRAM) vs Static RAM (SRAM)
-- [What is DRAM Frequency : A Complete Guide](https://www.electronicshub.org/what-is-dram-frequency/)
+[What is DRAM Frequency : A Complete Guide](https://www.electronicshub.org/what-is-dram-frequency/)
+
 | DRAM Generation | Frequency Range     |
 |-----------------|---------------------|
 | DDR1            | 200 MHz to 400 MHz |
