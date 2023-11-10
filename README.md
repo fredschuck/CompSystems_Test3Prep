@@ -30,7 +30,7 @@ Example:
 ## Addition
 ## Subtracting
 When doing a regular subtraction, we simply use the `sub` instruction.
-### a = a - b 
+**a = a - b**
 ```s
     lw x1, 0(x11)       #load a from memory to a's temp register (x1)
     lw x2, 0(x12)       #load b from memory to b's temp register (x2)
@@ -38,7 +38,7 @@ When doing a regular subtraction, we simply use the `sub` instruction.
     sw x1, 0(x11)       #save to memory by storing to memory location
 ```
 The following equation is to be done immediately, for which no immediate instruction exists for subtracting, so we use `addi` to effectively do the same thing.
-### a--
+**a--**
 ```s
     lw x1, 0(x11)       #load to temp register from memory location
     addi x1, x1, -1     #use 'add immediate' instruction to add -1
@@ -52,7 +52,7 @@ a -= b
     sw x1, 0(x11)       #save to memory by storing to memory location
 ``` -->
 ## Multiplication 
-#### a = b * 3 + i * 4;
+**a = b * 3 + i * 4**
 ```s
 
     lw x2, 0(x12)       #load b from memory to b's temp register (x2)
@@ -63,7 +63,7 @@ a -= b
     add x1, x20, x21    #x1 now has b*3 + i*4
     sw x1, 0(x11)       #store x1 to memory location of a (x11)
 ```
-a = b * 32 + i * 65;
+**a = b * 32 + i * 65**
 ```s
     lw x2, 0(x12)       #load b from memory to b's temp register (x2)
     slli x20, x2, 5     #x20 now has b * 2^5 (32)
