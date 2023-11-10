@@ -1,3 +1,9 @@
+| Variables and arrays | int a | int b | long int la | long int lb | int i | int A[] | int B[] |
+|----------------------|-------|-------|-------------|-------------|-------|---------|---------|
+| Assigned register for data| x1 | x2 | x3 | x4 | x5 |  |  |
+|Assigned register for memory addresses | x11 | x12 | x13 | x14 | x15 | Base address: x16 | Base address: x17 |
+
+
 # Question 1
 **a = b * 3 + i * 4**
 ```s
