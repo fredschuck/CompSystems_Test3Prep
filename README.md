@@ -37,7 +37,7 @@ When doing a regular subtraction, we simply use the `sub` instruction.
     sub x1, x1, x2      #x1 = x1 - x2
     sw x1, 0(x11)       #save to memory by storing to memory location
 ```
-The following equations is to be done immediately, for which no immediate instruction exists for subtracting, so we use `addi` to effectively do the same thing.
+The following equation is to be done immediately, for which no immediate instruction exists for subtracting, so we use `addi` to effectively do the same thing.
 ### a--
 ```s
     lw x1, 0(x11)       #load to temp register from memory location
@@ -52,7 +52,7 @@ a -= b
     sw x1, 0(x11)       #save to memory by storing to memory location
 ``` -->
 ## Multiplication 
-### a = b * 3 + i * 4;
+#### a = b * 3 + i * 4;
 ```s
 
     lw x2, 0(x12)       #load b from memory to b's temp register (x2)
