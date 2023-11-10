@@ -1,3 +1,7 @@
+# Instructions
+
+> For all the questions in this quiz, use ONLY the add, addi, sub, slli, load/store (ld/sd, lw/sw, lhw/shw, lb/sb) instructions to convert the given C statements to the corresponding RISC-V assembly. The use of registers for their values and memory address are pre-assigned as in the following table. You can use the temporary registers x20-x31. x0 always contains 0 and cannot be changed. At the beginning of the program, the data for all variables and arrays are in memory. The value of a variable or an array element must be stored back to memory EACH time it is modified. The int type has 4 bytes and the long int type has 8 bytes.
+
 | Variables and arrays | int a | int b | long int la | long int lb | int i | int A[] | int B[] |
 |----------------------|-------|-------|-------------|-------------|-------|---------|---------|
 | Assigned register for data| x1 | x2 | x3 | x4 | x5 |  |  |
