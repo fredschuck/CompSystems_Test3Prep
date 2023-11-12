@@ -74,7 +74,7 @@ a -= b
     sw x1, 0(x11)       #store x1 to memory location of a (x11)
 ```
 ## Division
-
+ 
 # Unit 1
 
 ## Memory Layout of a Program
