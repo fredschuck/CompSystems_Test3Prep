@@ -30,6 +30,7 @@ Example:
 ## Addition
 ## Subtracting
 When doing a regular subtraction, we simply use the `sub` instruction.
+
 **a = a - b**
 ```s
     lw x1, 0(x11)       #load a from memory to a's temp register (x1)
@@ -38,6 +39,7 @@ When doing a regular subtraction, we simply use the `sub` instruction.
     sw x1, 0(x11)       #save to memory by storing to memory location
 ```
 The following equation is to be done immediately, for which no immediate instruction exists for subtracting, so we use `addi` to effectively do the same thing.
+
 **a--**
 ```s
     lw x1, 0(x11)       #load to temp register from memory location
