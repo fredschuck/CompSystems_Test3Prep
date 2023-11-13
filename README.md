@@ -29,6 +29,24 @@ Example:
 ```
 
 ## Addition
+
+**c = a + b**
+```s
+    lw x1, 0(x11)       #load a from memory to a's temp register (x1)
+    lw x2, 0(x12)       #load b from memory to b's temp register (x2)
+    add x3, x1, x2      #x20 = x1 - x2
+    sw x3, 0(x13)       #save to memory by storing to memory location
+```
+**a = i++**
+```s
+lw x5, 0(x15)       #load i from memory to register x5 
+add x1, x5, 0       #a = i
+addi x5, x5, 1      #i++
+sw x1, 0(x11)       #store x1 to memory location of a (x11)
+sw x5, 0(x15)       #store x5 to memory location of i (x15)
+```
+> NOTE: Use `addi` when `+=`, `++` or `--` is used.
+
 ## Subtracting
 When doing a regular subtraction, we simply use the `sub` instruction.
 
