@@ -18,13 +18,13 @@ Example:
 
 ## Starting an Assembly Program
 ```
-.globl <function name>  #global label
+.globl <function name>  #global label - this function is globally accessible
 .data 
     A:      .space 32   #allocate 32 bytes of memory for A
     sum:    .space 4    #allocate 4 bytes of memory for sum
 .text
 
-<function name>         #function label
+<function name>         #function label (i.e. "main")
     #code goes here
 ```
 
