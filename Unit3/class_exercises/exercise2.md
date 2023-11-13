@@ -219,11 +219,11 @@ while (i<100) {
 ## Question 19
 ```c
 for (i = 0; i<100; i++) {
-           if (A[i] > B[i]) {
-                    a = A[i];
-                    A[i] = B[i];
-                    B[i] = a; 
-           } 
+    if (A[i] > B[i]) {
+        a = A[i];
+        A[i] = B[i];
+        B[i] = a; 
+    } 
 }
 ```
 ```s
@@ -233,9 +233,9 @@ for (i = 0; i<100; i++) {
 ## Question 20
 ```c
 for (i = 0; i<100; i++) {
-           if (A[i] > B[i]) {
-              A[i] = A[i] - B[i];
-           } else A[i] = B[i] - A[i];
+    if (A[i] > B[i]) {
+        A[i] = A[i] - B[i];
+    } else A[i] = B[i] - A[i];
 }
 ```
 ```s
