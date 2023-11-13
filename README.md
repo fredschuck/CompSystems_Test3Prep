@@ -24,7 +24,7 @@ Example:
     sum:    .space 4    #allocate 4 bytes of memory for sum
 .text
 
-<function name>         #function label (i.e. "main")
+<function name>:         #function label (i.e. "main")
     #code goes here
 ```
 ## Example Assembly Program
