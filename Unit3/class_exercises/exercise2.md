@@ -57,6 +57,14 @@ if (a != b) i = a-b;
 else i = 0;
 ```
 ```s
+    lw x1, 0(x11)
+    lw x2, 0(x12)
+    beq x1, x2, else
+    sub x5, x1, x2
+    sw x5, 0(x15)
+    beq x0, x0, exit
+else:
+    sw x0, 0(x15)
 
 ```
 
