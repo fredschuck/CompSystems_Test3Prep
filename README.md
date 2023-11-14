@@ -16,7 +16,7 @@ Example:
 
 # Assembly Cheatsheet
 **REVIEW FOLLOWING EXERCISES:**
-[Exercise A](Unit2/class_exercises/exercise2.md) | [Exercise B](Unit3/class_exercises/exercise2.md)
+**[Exercise A](Unit2/class_exercises/exercise2.md) | [Exercise B](Unit3/class_exercises/exercise2.md)**
 
 ## Starting an Assembly Program
 ```s
