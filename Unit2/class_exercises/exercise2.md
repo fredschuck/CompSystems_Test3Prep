@@ -160,22 +160,22 @@ lw x2, 0(x12)
 add x5, x1, x2
 sw x5, 0(x15)
 
-slli x20, x5, 2     #x20 now holds i * 4 for the offset
+slli x20, x5, 2     #x20 now holds i*4 for the offset
 add x21, x20, x16   #Add i to base address (&) of A[] to get &A[i]
 lw x22, 0(x21)      #Load word from A[i] to x22 
 add x22, x22, x1    #A[i] + a 
 sw x22, 0(x21)      #Store back to memory for A[i]
 
-add x21, x20, x17   #Add i to base address of B[] to get &B[i] - Remember that x20 still holds i * 4
+add x21, x20, x17   #Add i to base address of B[] to get &B[i] - Remember that x20 still holds i*4
 lw x1, 0(x21)       #Load word from B[i] to x25
 sw x1, 0(x11)       #Store back to memory for a
 
-add x21, x20, x16   #Add i * 4 to &A[] to move to &A[i] - Remember that x20 still holds i * 4
+add x21, x20, x16   #Add i*4 to &A[] to move to &A[i] - Remember that x20 still holds i*4
 lw x2, 0(x21)       #Load word from A[i] to b (x2)
 sw x2, 0(x12)       #Store back to memory for b
 
 addi x20, x5, -1    #x20 now holds i-1
-slli x20, x20, 2    #x20 now holds (i-1) * 4
+slli x20, x20, 2    #x20 now holds (i-1)*4
 add x21, x20, x17   #Add (i-1) to base address of B[] to get &B[i-1]
 lw x22, 0(x21)      #Load word from B[i-1] to x22
 lw x1, 0(x11)       #Load word from a to x1
@@ -196,13 +196,13 @@ lw x2, 0(x12)
 add x5, x1, x2
 sw x5, 0(x15)
 
-slli x20, x5, 2     #x20 now holds i * 4 for the offset
+slli x20, x5, 2     #x20 now holds i*4 for the offset
 add x21, x16, x20   #x21 now holds base address of A[i]
 lw x23, 0(x20)      #x20 holds value of A[i]
 add x23, x23, x1    #A[i] + a
 sw x23, 0(x21)      #Store back to memory for A[i]
 
-add x22, x17, x20   #x20 now holds base address of B[i] - Remember that x20 still holds i * 4
+add x22, x17, x20   #x20 now holds base address of B[i] - Remember that x20 still holds i*4
 lw x23, 0(x22)      #x23 holds B[i]
 lw x24, 4(x22)      #x24 holds B[i+1]
 add x23, x23, x24   #x23 holds B[i] + B[i+1]
