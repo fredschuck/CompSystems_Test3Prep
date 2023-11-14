@@ -340,7 +340,17 @@ while (i<100) {
 }
 ```
 ```s
-
+        li x5, 0                 #i = 0
+        li x23, 100              #x23 = 100
+loop:   bge x5, x23, exit        #if i >= 100, jump to exit
+        slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
+        add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
+        lw x22, 0(x21)           #x22 = A[i]
+        beq x22, x1, break        #if A[i] == a, jump to break
+        addi x5, x5, 1           #i++
+        beq x0, x0, loop         #jump to loop
+break:
+exit:
 ```
 
 ## Question 19
@@ -354,7 +364,22 @@ for (i = 0; i<100; i++) {
 }
 ```
 ```s
-
+        li x5, 0                 #i = 0
+        li x23, 100              #x23 = 100
+loop:   bge x5, x23, exit        #if i >= 100, jump to exit
+        slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
+        add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
+        add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
+        blt 0(x21), 0(x22), else #if A[i] < B[i], jump to else
+        beq 0(x21), 0(x22), else #if A[i] == B[i], jump to else
+        sw 0(x21), 0(x11)        #a = A[i]
+        sw 0(x22), 0(x21)        #A[i] = B[i]
+        sw 0(x11), 0(x22)        #B[i] = a
+        addi x5, x5, 1           #i++
+        beq x0, x0, loop         #jump to loop
+else:   addi x5, x5, 1           #i++
+        beq x0, x0, loop         #jump to loop
+exit:
 ```
 
 ## Question 20
