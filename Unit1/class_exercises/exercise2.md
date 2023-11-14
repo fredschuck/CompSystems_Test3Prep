@@ -6,13 +6,10 @@ Using ONLY the add, sub and slli instruction to convert the following C statemen
 `f = g * 3 – j * 16;`
 
 Your Answer:
-```
+```s
 slli t2, t0, 1 
-
 add t2, t2, t0
-
 slli t3, t1, 4
-
 sub t0, t2, t3
 ```
 
@@ -22,14 +19,10 @@ Using ONLY the add, sub and slli instruction to convert the following C statemen
 `f = g – j * 33 + f * 2; //Hint: 33 = 32 + 1`
 
 Your Answer:
-```
+```s
 slli t3, t1, 5 
-
 add t3, t3, t1  
-
 sub t0, t0, t3  
-
 slli t2, t2, 1  
-
 add t0, t0, t2
 ```
