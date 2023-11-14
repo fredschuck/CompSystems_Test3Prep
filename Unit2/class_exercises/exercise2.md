@@ -144,7 +144,6 @@ sw x21, 120(x16)
 ```
 
 ## Question 10
-> The answers to this question have not been verified yet.
 **i = a + b**
 
 **A[i] = A[i] + a**
@@ -154,6 +153,9 @@ sw x21, 120(x16)
 **b = A[i]**
 
 **a += B[i-1]**
+
+> The answers to this question have not been verified yet.
+
 ```s
 lw x1, 0(x11)
 lw x2, 0(x12)
@@ -178,12 +180,14 @@ sw x1, 0(x11)       #Store back to memory for a
 ```
 
 ## Question 11
-> The answers to this question have not been verified yet.
 **i = a + b**
 
 **A[i] = A[i] + a**
 
 **A[i] = B[i-2] + B[i-1] + B[i] + B[i+1] + B[i+2]**
+
+> The answers to this question have not been verified yet.
+
 ```s
 lw x1, 0(x11)
 lw x2, 0(x12)
