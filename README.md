@@ -109,20 +109,20 @@ a -= b
 ```s
 
     lw x2, 0(x12)       #load b from memory to b's temp register (x2)
-    slli x20, x2, 1     #x20 now has b * 2^1 (use a new, temp register to hold partial value)
+    slli x20, x2, 1     #x20 now has b*2^1 (use a new, temp register to hold partial value)
     add x20, x20, x2    #x20 now has b*2 + b (add b to that temp register)
     lw x5, 0(x15)       #load i from memory to register x5
-    slli x21, x5, 2     #x21 now has i * 4 
+    slli x21, x5, 2     #x21 now has i*4 
     add x1, x20, x21    #x1 now has b*3 + i*4
     sw x1, 0(x11)       #store x1 to memory location of a (x11)
 ```
 **a = b * 32 + i * 65**
 ```s
     lw x2, 0(x12)       #load b from memory to b's temp register (x2)
-    slli x20, x2, 5     #x20 now has b * 2^5 (32)
+    slli x20, x2, 5     #x20 now has b*2^5 (32)
     lw x5, 0(x15)       #load i from memory to register x5
-    slli x21, x5, 5     #x21 now has i * 2^6 (64)
-    add x21, x21, x5    #add i to the result to make it i * 65
+    slli x21, x5, 5     #x21 now has i*2^6 (64)
+    add x21, x21, x5    #add i to the result to make it i*65
     add x1, x20, x21    #x1 now has b*32 + i*65
     sw x1, 0(x11)       #store x1 to memory location of a (x11)
 ```
