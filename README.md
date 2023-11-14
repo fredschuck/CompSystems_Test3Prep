@@ -154,10 +154,43 @@ lw x22, 0(x21)      #Load word from A[i] to x22
 add x22, x22, x1    #A[i] + a 
 sw x22, 0(x21)      #Store back to memory for A[i]
 ```
-## Loops
 
 ## Conditionals
+For conditionals, create a branch that will jump to another label if the condition is not met. If the condition is met, then the code will continue to execute as normal. Notice that at the end of the if-statement instruction, we jump to exit to avoid executing the else-statement.
+```c
+if (a>=b) a++;
+else b++;
+```
+```s
+        lw x1, 0(x11)
+        lw x2, 0(x12)
+        ble x1, x2, else    #if a < b, jump to else
+        addi x1, x1, 1
+        sw x1, 0(x11)
+        beq x0, x0, exit
+else:   
+        addi x2, x2, 1
+        sw x2, 0(x12)
+exit:
+```
 
+## Loops
+For loops, we want to use the a label (i.e., 'loop') to be at the beginning of the conditional statement. If the condition is not met, then we jump to the end of the loop (i.e., 'exit'). If the condition is met, then we execute the body of the loop and jump back to the beginning of the loop (i.e., 'loop').
+```c
+for (i=0; i<100; i++) {
+    a = a + i;
+}
+```
+```s
+        li x5, 0                #i = 0
+        li x23, 100             #x23 = 100 (We can use a register to hold 100 or use 100 itself)
+loop:   
+        bge x5, x23, exit       #if i >= 100, jump to exit
+        add x1, x1, x5          #a = a + i
+        addi x5, x5, 1          #i++
+        beq x0, x0, loop        #jump to loop
+exit:
+```
 
 # Unit 1
 
