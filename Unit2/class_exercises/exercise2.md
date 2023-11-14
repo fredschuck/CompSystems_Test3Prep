@@ -21,7 +21,7 @@ sw x1, 0(x11)       #store x1 to memory location of a (x11)
 ```
 
 ## Question 2
-
+**a = b * 33 + i * 2** // Hint: 33 = 32 + 1
 ```s
 lw x2, 0(x12)       #load b from memory to register x2
 slli x20, x2, 5     #x20 now has b*32
@@ -33,7 +33,9 @@ sw x1, 0(x11)       #store x1 to memory location of a (x11)
 ```
 
 ## Question 3
-
+**la = a * 1024**
+**lb = b * 2^30**
+**la = la + lb**
 ```s
 lw x1, 0(x11)       #load a from memory to register x1
 slli x3, x1, 10     #x3 now has a*2^10 
@@ -48,16 +50,17 @@ sd x3, 0(x13)       #store x3 into data register for la (x13)
 ```
 
 ## Question 4
-
+**a = i++**
 ```s
 lw x5, 0(x15)       #load i from memory to register x5 
-add x1, x5, 0       #a = i
+add x1, x5, x0      #a = i
+sw x1, 0(x11)       #store x1 to memory location of a (x11)
 addi x5, x5, 1      #i++
-sw x5, 0(x11)       #store x5 to memory location of a (x11)
+sw x5, 0(x11)       #store x5 to memory location of i (x15)
 ```
 
 ## Question 5
-
+**a += 10**
 ```s
 lw x1, 0(x11)       #load a from memory to register x1
 addi x1, x1, 10     #add 10 to a and save to a
@@ -65,7 +68,10 @@ sw x1, 0(x11)       #store x1 into memory location of a (x11)
 ```
 
 ## Question 6
-
+**a = a * 128**
+**b += 10**
+**a -= b**
+**la += a + b**
 ```s
 lw x1, 0(x11)
 slli x1, x1, 7
@@ -79,21 +85,24 @@ sub x1, x1, x2
 sw x1, 0(x11)
 
 ld x3, 0(x13)
-addi x3, x1, x2
+add x20, x1, x2
+addi x3, x3, x20
 sd x3, 0(x13)
 ```
 
 ## Question 7
-
+**a = A[10]**
+**b = A[20]**
 ```s
-lw x20, 40(x16)
-sw x20, 0(x11)
-lw x21, 80(x17)
-sw x21, 0(x12)
+lw x1, 40(x16)
+sw x1, 0(x11)
+lw x2, 80(x17)
+sw x2, 0(x12)
 ```
 
 ## Question 8
-
+**A[4] = a**
+**B[8] = b + i**
 ```s
 lw x1, 0(x11)
 sw x1, 16(x16)
@@ -105,33 +114,41 @@ sw x20, 32(x17)
 ```
 
 ## Question 9
-
+**A[10] = B[10] + a**
+**A[20] = A[20] + B[20]**
+**A[30] += B[30]**
 ```s
 lw x1, 0(x11)
 lw x20, 40(x17)
-add x21, x20, x1
-sw x21, 40(x16)
+add x20, x20, x1
+sw x20, 40(x16)
 
-lw x22, 80(x16)
-lw x23, 80(x17)
-add x22, x22, x23
-sw x22, 80(x16)
+lw x20, 80(x16)
+lw x21, 80(x17)
+add x20, x20, x21
+sw x20, 80(x16)
 
-lw x23, 120(x16) 
-lw x24, 120(x17) 
-addi x23, x23, x24
-sw x23, 120(x16)
+lw x20, 120(x16) 
+lw x21, 120(x17) 
+addi x21, x21, x20
+sw x21, 120(x16)
 ```
 
 ## Question 10
-
+> The answers to this question have not been verified yet.
+**i = a + b**
+**A[i] = A[i] + a**
+**a = B[i]**
+**b = A[i]**
+**a += B[i-1]**
 ```s
 lw x1, 0(x11)
 lw x2, 0(x12)
-lw x5, 0(x15)
 add x5, x1, x2
 sw x5, 0(x15)
-add x21, x16, x5    #Add i to base address of A[] to get address of A[i]
+
+slli x20, x5, 2     #x20 now holds i * 4 for the offset
+add x21, x20, x16   #Add i to base address of A[] to get address of A[i]
 lw x22, 0(x21)      #Load word from A[i] to x22 
 add x23, x22, x1    #A[i] + a 
 sw x23, 0(x21) 
@@ -148,7 +165,10 @@ sw x1, 0(x11)       #Store back to memory for a
 ```
 
 ## Question 11
-
+> The answers to this question have not been verified yet.
+**i = a + b**
+**A[i] = A[i] + a**
+**A[i] = B[i-2] + B[i-1] + B[i] + B[i+1] + B[i+2]**
 ```s
 lw x1, 0(x11)
 lw x2, 0(x12)
