@@ -139,8 +139,8 @@ a -= b
 | 2. Add that to base address to move to the target address    |`add x21, x20, x16`|
 | 3. Now that `x21` holds the _address_, load the value from that address        |`lw x22, 0(x21)  ` |
 
-If we need to access A[i+2] or A[i-1], for example, we can do the following:
-- Since we already know that `x21` holds the address of A[i], we can simply add 8 to it to get the address of A[i+2] or subtract 4 to get the address of A[i-1].
+If we need to access `A[i+2]` or `A[i-1]`, for example, we can do the following:
+- Since we already know that `x21` holds the _address_ of `A[i]`, we can simply add 8 to it to get the address of `A[i+2]` or subtract 4 to get the address of `A[i-1]`.
 ```s
 addi x21, x21, 8     #A[i+2]
 addi x21, x21, -4    #A[i-1]
