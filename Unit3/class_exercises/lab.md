@@ -32,7 +32,7 @@ Convert and execute the loop.s file from the RARS repo in the test folder.
 	- During the step-by-step simulation in RARS, do the simulation in your mind of the corresponding C program to understand how high-level language programs are actually executed by a computer.
 	- To see the Labels window, go to the Settings menu and select “Show Labels Window (symbols table).”
 
-	<div style="text-align:center;"><img src="../resources/lab-screenshot_1.png" width="1000"></div>
+	<div style="text-align:center;"><br><br><br><img src="../resources/lab-screenshot_1.png" width="1000"><br><br></div>
 
 ```c
 int main(void){
