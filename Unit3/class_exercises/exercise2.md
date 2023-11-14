@@ -251,7 +251,7 @@ loop:   bge x5, x23, exit       #if i >= 100, jump to exit
         add x22, x20, x17       #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
         sw 0(x22), 0(x21)       #A[i] = B[i]
         addi x5, x5, 1          #i++
-        blt x5, x23, loop       #if i < 0, jump to loop 
+        beq x0, x0, loop       #if i < 0, jump to loop 
 exit:
 ```
 
