@@ -58,12 +58,12 @@ Implement a program to accumulate the integer numbers from 1 to 100 using RISC-V
 .text
 main:
 	# Tests simple looping behaviour
-	li t0, 0				# sum = 0
-	li t1, 0				# i = 0
+	li t0, 0			# sum = 0
+	li t1, 0			# i = 0
 loop:
-	addi t1, t1, 5			# i++ 
-	add t0, t0, t1			# a += i
-	bne t1, t0, loop  		# if i != a, go to loop
+	addi t1, t1, 5		# i++ 
+	add t0, t0, t1		# a += i
+	bne t1, t0, loop  	# if i != a, go to loop
 	bne t1, zero, success	# if i == 0, go to success
 failure:
 	li a0, 0
