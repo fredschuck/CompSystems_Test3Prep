@@ -127,6 +127,16 @@ a -= b
     sw x1, 0(x11)       #store x1 to memory location of a (x11)
 ```
 ## Division
+
+## Arrays
+**A[i] = A[i] + a**
+```s
+slli x20, x5, 2     #x20 now holds i * 4 for the offset
+add x21, x20, x16   #Add i to base address (&) of A[] to get &A[i]
+lw x22, 0(x21)      #Load word from A[i] to x22 
+add x22, x22, x1    #A[i] + a 
+sw x22, 0(x21)      #Store back to memory for A[i]
+```
  
 # Unit 1
 
