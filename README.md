@@ -1,19 +1,3 @@
-
-
-- [Environment Calls](https://github.com/TheThirdOne/rars/wiki/Environment-Calls)
-- [Assembler Directives](https://github.com/TheThirdOne/rars/wiki/Assembler-Directives)
-- [Supported Instructions](https://github.com/TheThirdOne/rars/wiki/Supported-Instructions)
-- [Creating 'Hello World'](https://github.com/TheThirdOne/rars/wiki/Creating-Hello-World)
-
-Example: 
-- f = g - j + f * 16
-- f = (g - j) + (f * 16)
-- r1 = f * 16 (if it were 15, use (16 - 1))
-    - mult --> shift to the left
-    - 16 = 2^4
-- r2 = g - j
-- r3 = r2 + r1
-
 # Assembly Cheatsheet
 > ⭐️ **REVIEW FOLLOWING EXERCISES:**
 **[Exercise A](Unit2/class_exercises/exercise2.md) | [Exercise B](Unit3/class_exercises/exercise2.md)**
@@ -285,4 +269,10 @@ exit:
 - SRAM is faster than DRAM
 - The DRAM frequency is measured in megahertz (MHz) and indicates how many cycles the DRAM can perform in one second.
 - Actual data transfer speed within the DRAM is about **half** of the stated **frequency**.
+
+# Other Resources
+- [Environment Calls](https://github.com/TheThirdOne/rars/wiki/Environment-Calls)
+- [Assembler Directives](https://github.com/TheThirdOne/rars/wiki/Assembler-Directives)
+- [Supported Instructions](https://github.com/TheThirdOne/rars/wiki/Supported-Instructions)
+- [Creating 'Hello World'](https://github.com/TheThirdOne/rars/wiki/Creating-Hello-World)
 
