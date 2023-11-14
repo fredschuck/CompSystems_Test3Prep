@@ -33,7 +33,7 @@ if (a == b) i = 0;
 ```s
     lw x1, 0(x11)
     lw x2, 0(x12)
-    bne x1, x2, exit
+    bne x1, x2, exit    #if a != b, jump to exit
     sw x0, 0(x15)
 exit:
 ```
@@ -45,7 +45,7 @@ if (a != b) i = a-b;
 ```s
     lw x1, 0(x11)
     lw x2, 0(x12)
-    beq x1, x2, exit
+    beq x1, x2, exit    #if a == b, jump to exit
     sub x5, x1, x2
     sw x5, 0(x15)
 exit:
@@ -59,12 +59,12 @@ else i = 0;
 ```s
     lw x1, 0(x11)
     lw x2, 0(x12)
-    beq x1, x2, else
+    beq x1, x2, else    #if a == b, jump to else
     sub x5, x1, x2
     sw x5, 0(x15)
     beq x0, x0, exit
 else:
-    sw x0, 0(x15)
+    sw x0, 0(x15)       #i = 0
 exit:
 ```
 
@@ -76,7 +76,7 @@ else b++;
 ```s
     lw x1, 0(x11)
     lw x2, 0(x12)
-    ble x1, x2, else
+    ble x1, x2, else    #if a < b, jump to else
     addi x1, x1, 1
     sw x1, 0(x11)
     beq x0, x0, exit
@@ -94,7 +94,7 @@ else A[4] = 0;
 ```s
     lw x1, 0(x11)
     lw x2, 0(x12)
-    beq x1, x2, else
+    beq x1, x2, else    #if a == b, jump to else
     sub x20, x1, x2
     sw x20, 16(x16)
     beq x0, x0, exit
@@ -126,7 +126,17 @@ if (a != b) A[i] = a - b;
 else A[i] = 0;
 ```
 ```s
-
+    lw x1, 0(x11)
+    lw x2, 0(x12)
+    lw x5, 0(x15)
+    beq x1, x2, else
+    sub x20, x1, x2
+    addi x21, x5, x0
+    sw x21, 0(x16)
+    beq x0, x0, exit
+else:
+    sw x0, 0(x16)
+exit:
 ```
 
 ## Question 8
@@ -135,7 +145,17 @@ if (a == b) A[i] = a - b;
 else A[i] = 0;
 ```
 ```s
-
+    lw x1, 0(x11)
+    lw x2, 0(x12)
+    lw x5, 0(x15)
+    slli x20, x5, 2        #x20 = i * 4 bytes (size of each entry in array)
+    add x20, x20, x16      #add base address to offset (&A[0] + i * 4 = &A[i])
+    bne x1, x2, else
+    sub x21, x1, x2        #x21 = a - b
+    sw x21, 0(x20)         #A[i] = a - b (Since x20 is the address of A[i], we use offset 0)
+else:
+    sw x0, 0(x20)          #A[i] = 0
+exit:
 ```
 
 ## Question 9
