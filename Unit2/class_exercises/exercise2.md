@@ -190,27 +190,27 @@ sw x1, 0(x11)       #Store back to memory for a
 
 **A[i] = B[i-2] + B[i-1] + B[i] + B[i+1] + B[i+2]**
 
-> The answers to this question have not been verified yet.
-
 ```s
 lw x1, 0(x11)
 lw x2, 0(x12)
 add x5, x1, x2
+sw x5, 0(x15)
 
-add x19, x16, x5    #x19 now holds base address of A[i]
-lw x20, 0(x19)
-add x20, x20, x1
-sw x20, 0(x19)
+slli x20, x5, 2     #x20 now holds i * 4 for the offset
+add x21, x16, x20   #x21 now holds base address of A[i]
+lw x23, 0(x20)      #x20 holds value of A[i]
+add x23, x23, x1    #A[i] + a
+sw x23, 0(x21)      #Store back to memory for A[i]
 
-add x20, x17, x5    #x20 now holds base address of B[i]
-lw x22, 0(x20)      #x22 holds B[i]
-lw x23, -8(x20)     #x23 holds B[i-2]
-lw x24, -4(x20)     #x24 holds B[i-1]
-lw x25, 4(x20)      #x25 holds B[i+1]
-lw x26, 8(x20)      #x26 holds B[i+2]
-add x21, x23, x24   #x21 holds B[i-2] + B[i-1]
-add x27, x22, x25   #x27 holds B[i] + B[i+1]
-add x28, x21, x27   #x28 holds B[i-2] + B[i-1] + B[i] + B[i+1]
-add x29, x28, x26   #x29 holds x28 + B[i+2]
-sw x29, 0(x19)
+add x22, x17, x20   #x20 now holds base address of B[i] - Remember that x20 still holds i * 4
+lw x23, 0(x22)      #x23 holds B[i]
+lw x24, 4(x22)      #x24 holds B[i+1]
+add x23, x23, x24   #x23 holds B[i] + B[i+1]
+lw x24, 8(x22)      #x24 holds B[i+2]
+add x23, x23, x24   #x23 holds B[i] + B[i+1] + B[i+2]
+lw x24, -4(x22)     #x24 holds B[i-1]
+add x23, x23, x24   #x23 holds B[i] + B[i+1] + B[i+2] + B[i-1]
+lw x24, -8(x22)     #x24 holds B[i-2]
+add x23, x23, x24   #x23 holds B[i] + B[i+1] + B[i+2] + B[i-1] + B[i-2]
+sw x23, 0(x21)      #Store back to memory for A[i]
 ```
