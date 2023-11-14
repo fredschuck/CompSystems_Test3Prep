@@ -20,7 +20,8 @@ else i = a - b;
         addi x5, x0, 0   #set x5 to 0 for i
         sd x5, 0(x15)    #i = 0, store to memory
         beq x0, x0, exit #jump to exit for the loop
-else:   sub x5, x1, x2   #set x5 to have a-b
+else:   
+        sub x5, x1, x2   #set x5 to have a-b
         sd x5, 0(x15)    #i=a-b, store to memory
 exit: 
 ```
@@ -63,7 +64,8 @@ else i = 0;
         sub x5, x1, x2
         sw x5, 0(x15)
         beq x0, x0, exit
-else:   sw x0, 0(x15)       #i = 0
+else:   
+        sw x0, 0(x15)       #i = 0
 exit:
 ```
 
@@ -79,7 +81,8 @@ else b++;
         addi x1, x1, 1
         sw x1, 0(x11)
         beq x0, x0, exit
-else:   addi x2, x2, 1
+else:   
+        addi x2, x2, 1
         sw x2, 0(x12)
 exit:
 ```
@@ -96,7 +99,8 @@ else A[4] = 0;
         sub x20, x1, x2
         sw x20, 16(x16)
         beq x0, x0, exit
-else:   sw x0, 16(x16)
+else:   
+        sw x0, 16(x16)
 exit:
 ```
 
@@ -112,7 +116,8 @@ else A[4] = 0;
         sub x20, x1, x2
         sw x20, 16(x16)
         beq x0, x0, exit     #jump to exit
-else:   sw x0, 16(x16)
+else:   
+        sw x0, 16(x16)
 exit:
 ```
 
@@ -130,7 +135,8 @@ else A[i] = 0;
         addi x21, x5, x0
         sw x21, 0(x16)
         beq x0, x0, exit      #jump to exit
-else:   sw x0, 0(x16)
+else:   
+        sw x0, 0(x16)
 exit:
 ```
 
@@ -149,7 +155,8 @@ else A[i] = 0;
         sub x21, x1, x2        #x21 = a - b
         sw x21, 0(x20)         #A[i] = a - b (Since x20 is the address of A[i], we use offset 0)
         beq x0, x0, exit       #jump to exit
-else:   sw x0, 0(x20)          #A[i] = 0
+else:   
+        sw x0, 0(x20)          #A[i] = 0
 exit:
 ```
 
@@ -164,7 +171,8 @@ else A[4] = b;
         beq x1, x20, else       #if A[4] == a, jump to else
         sw x1, 16(x16)
         beq x0, x0, exit
-else:   lw x2, 0(x12)
+else:   
+        lw x2, 0(x12)
         sw x2, 16(x16)
 exit:
 ```
@@ -182,7 +190,8 @@ else A[i] = A[i] - B[i];
         bne 0(x21), 0(x22), else #if A[i] != B[i], jump to else
         sw x0, 0(x21)            #A[i] = 0 
         beq x0, x0, exit
-else:   sub x23, 0(x21), 0(x22)  #x23 = A[i] - B[i]
+else:   
+        sub x23, 0(x21), 0(x22)  #x23 = A[i] - B[i]
         sw x23, 0(x21)           #A[i] = A[i] - B[i]
 exit:
 ```
@@ -196,7 +205,8 @@ for (i=0; i<100; i++) {
 ```s
         li x5, 0                #i = 0
         li x23, 100             #x23 = 100 (We can use a register to hold 100 or use 100 itself)
-loop:   bge x5, x23, exit       #if i >= 100, jump to exit
+loop:   
+        bge x5, x23, exit       #if i >= 100, jump to exit
         add x1, x1, x5          #a = a + i
         addi x5, x5, 1          #i++
         beq x0, x0, loop        #jump to loop
@@ -211,7 +221,8 @@ for (i=100; i>=0; i--) {
 ```
 ```s
         li x5, 100              #i = 100
-loop:   blt x5, x0, exit        #if i < 0, jump to exit
+loop:   
+        blt x5, x0, exit        #if i < 0, jump to exit
         add x1, x1, x5          #a = a + i
         addi x5, x5, -1         #i--
         beq x0, x0, loop        #jump to loop
@@ -227,7 +238,8 @@ for (i=0; i<100; i++) {
 ```s
         li x5, 0                #i = 0
         li x23, 100             #x23 = 100
-loop:   bge x5, x23, exit       #if i >= 100, jump to exit
+loop:   
+        bge x5, x23, exit       #if i >= 100, jump to exit
         slli x20, x5, 2         #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16       #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         sw x5, 0(x21)           #A[i] = i
@@ -245,7 +257,8 @@ for (i=0; i<100; i++) {
 ```s
         li x5, 0                #i = 0
         li x23, 100             #x23 = 100
-loop:   bge x5, x23, exit       #if i >= 100, jump to exit
+loop:   
+        bge x5, x23, exit       #if i >= 100, jump to exit
         slli x20, x5, 2         #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16       #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         add x22, x20, x17       #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
@@ -264,7 +277,8 @@ for (i=1; i<100; i++) {
 ```s
         li x5, 1                 #i = 1
         li x23, 100              #x23 = 100
-loop:   bge x5, x23, exit        #if i >= 100, jump to exit
+loop:   
+        bge x5, x23, exit        #if i >= 100, jump to exit
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
@@ -287,7 +301,8 @@ while (i<100) {
 ```s
         li x5, 0                 #i = 0
         li x23, 100              #x23 = 100
-loop:   bge x5, x23, exit        #if i >= 100, jump to exit
+loop:   
+        bge x5, x23, exit        #if i >= 100, jump to exit
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
@@ -307,7 +322,8 @@ while (A[i] != a) {
 ```s
         li x5, 0                 #i = 0
         lw x1, 0(x11)            #load a
-loop:   slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
+loop:   
+        slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         lw x22, 0(x21)           #x22 = A[i]
         beq x22, x1, exit        #if A[i] == a, jump to exit
@@ -322,7 +338,8 @@ exit:
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         lw x22, 0(x21)           #x22 = A[i]
-loop:   beq x22, x1, exit        #if A[i] == a, jump to exit
+loop:   
+        beq x22, x1, exit        #if A[i] == a, jump to exit
         addi x5, x5, 1           #i++
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
@@ -342,7 +359,8 @@ while (i<100) {
 ```s
         li x5, 0                 #i = 0
         li x23, 100              #x23 = 100
-loop:   bge x5, x23, exit        #if i >= 100, jump to exit
+loop:   
+        bge x5, x23, exit        #if i >= 100, jump to exit
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         lw x22, 0(x21)           #x22 = A[i]
@@ -366,7 +384,8 @@ for (i = 0; i<100; i++) {
 ```s
         li x5, 0                 #i = 0
         li x23, 100              #x23 = 100
-loop:   bge x5, x23, exit        #if i >= 100, jump to exit
+loop:   
+        bge x5, x23, exit        #if i >= 100, jump to exit
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
@@ -377,7 +396,8 @@ loop:   bge x5, x23, exit        #if i >= 100, jump to exit
         sw 0(x11), 0(x22)        #B[i] = a
         addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
-else:   addi x5, x5, 1           #i++
+else:   
+        addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
 exit:
 ```
@@ -393,7 +413,8 @@ for (i = 0; i<100; i++) {
 ```s
         li x5, 0                 #i = 0
         li x23, 100              #x23 = 100
-loop:   bge x5, x23, exit        #if i >= 100, jump to exit
+loop:   
+        bge x5, x23, exit        #if i >= 100, jump to exit
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
@@ -403,7 +424,8 @@ loop:   bge x5, x23, exit        #if i >= 100, jump to exit
         sw x24, 0(x21)           #A[i] = A[i] - B[i]
         addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
-else:   sub x24, 0(x22), 0(x21)  #x23 = B[i] - A[i]
+else:   
+        sub x24, 0(x22), 0(x21)  #x23 = B[i] - A[i]
         sw x24, 0(x21)           #A[i] = B[i] - A[i]
         addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
@@ -422,7 +444,8 @@ for (i=0; i<100; i++) {
         sw 0(x16), 0(x11)        #a = A[0]
         li x5, 0                 #i = 0
         li x23, 100              #x23 = 100
-loop:   bge x5, x23, exit        #if i >= 100, jump to exit
+loop:   
+        bge x5, x23, exit        #if i >= 100, jump to exit
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         blt 0(x21), 0(x11), else #if A[i] < a, jump to else
@@ -430,7 +453,8 @@ loop:   bge x5, x23, exit        #if i >= 100, jump to exit
         sw 0(x21), 0(x11)        #a = A[i]
         addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
-else:   addi x5, x5, 1           #i++
+else:   
+        addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
 exit:
 ```
