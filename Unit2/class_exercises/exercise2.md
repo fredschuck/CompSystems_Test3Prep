@@ -34,7 +34,9 @@ sw x1, 0(x11)       #store x1 to memory location of a (x11)
 
 ## Question 3
 **la = a * 1024**
+
 **lb = b * 2^30**
+
 **la = la + lb**
 ```s
 lw x1, 0(x11)       #load a from memory to register x1
@@ -69,8 +71,11 @@ sw x1, 0(x11)       #store x1 into memory location of a (x11)
 
 ## Question 6
 **a = a * 128**
+
 **b += 10**
+
 **a -= b**
+
 **la += a + b**
 ```s
 lw x1, 0(x11)
@@ -92,6 +97,7 @@ sd x3, 0(x13)
 
 ## Question 7
 **a = A[10]**
+
 **b = A[20]**
 ```s
 lw x1, 40(x16)
@@ -102,6 +108,7 @@ sw x2, 0(x12)
 
 ## Question 8
 **A[4] = a**
+
 **B[8] = b + i**
 ```s
 lw x1, 0(x11)
@@ -115,7 +122,9 @@ sw x20, 32(x17)
 
 ## Question 9
 **A[10] = B[10] + a**
+
 **A[20] = A[20] + B[20]**
+
 **A[30] += B[30]**
 ```s
 lw x1, 0(x11)
@@ -171,7 +180,9 @@ sw x1, 0(x11)       #Store back to memory for a
 ## Question 11
 > The answers to this question have not been verified yet.
 **i = a + b**
+
 **A[i] = A[i] + a**
+
 **A[i] = B[i-2] + B[i-1] + B[i] + B[i+1] + B[i+2]**
 ```s
 lw x1, 0(x11)
