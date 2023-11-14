@@ -31,10 +31,10 @@ exit:
 if (a == b) i = 0;
 ```
 ```s
-    lw x1, 0(x11)
-    lw x2, 0(x12)
-    bne x1, x2, exit    #if a != b, jump to exit
-    sw x0, 0(x15)
+        lw x1, 0(x11)
+        lw x2, 0(x12)
+        bne x1, x2, exit    #if a != b, jump to exit
+        sw x0, 0(x15)
 exit:
 ```
 
@@ -43,11 +43,11 @@ exit:
 if (a != b) i = a-b;
 ```
 ```s
-    lw x1, 0(x11)
-    lw x2, 0(x12)
-    beq x1, x2, exit    #if a == b, jump to exit
-    sub x5, x1, x2
-    sw x5, 0(x15)
+        lw x1, 0(x11)
+        lw x2, 0(x12)
+        beq x1, x2, exit    #if a == b, jump to exit
+        sub x5, x1, x2
+        sw x5, 0(x15)
 exit:
 ```
 
@@ -57,14 +57,13 @@ if (a != b) i = a-b;
 else i = 0;
 ```
 ```s
-    lw x1, 0(x11)
-    lw x2, 0(x12)
-    beq x1, x2, else    #if a == b, jump to else
-    sub x5, x1, x2
-    sw x5, 0(x15)
-    beq x0, x0, exit
-else:
-    sw x0, 0(x15)       #i = 0
+        lw x1, 0(x11)
+        lw x2, 0(x12)
+        beq x1, x2, else    #if a == b, jump to else
+        sub x5, x1, x2
+        sw x5, 0(x15)
+        beq x0, x0, exit
+else:   sw x0, 0(x15)       #i = 0
 exit:
 ```
 
@@ -74,15 +73,14 @@ if (a>=b) a++;
 else b++;
 ```
 ```s
-    lw x1, 0(x11)
-    lw x2, 0(x12)
-    ble x1, x2, else    #if a < b, jump to else
-    addi x1, x1, 1
-    sw x1, 0(x11)
-    beq x0, x0, exit
-else: 
-    addi x2, x2, 1
-    sw x2, 0(x12)
+        lw x1, 0(x11)
+        lw x2, 0(x12)
+        ble x1, x2, else    #if a < b, jump to else
+        addi x1, x1, 1
+        sw x1, 0(x11)
+        beq x0, x0, exit
+else:   addi x2, x2, 1
+        sw x2, 0(x12)
 exit:
 ```
 
@@ -92,14 +90,13 @@ if (a != b) A[4] = a - b;
 else A[4] = 0;
 ```
 ```s
-    lw x1, 0(x11)
-    lw x2, 0(x12)
-    beq x1, x2, else    #if a == b, jump to else
-    sub x20, x1, x2
-    sw x20, 16(x16)
-    beq x0, x0, exit
-else:
-    sw x0, 16(x16)
+        lw x1, 0(x11)
+        lw x2, 0(x12)
+        beq x1, x2, else    #if a == b, jump to else
+        sub x20, x1, x2
+        sw x20, 16(x16)
+        beq x0, x0, exit
+else:   sw x0, 16(x16)
 exit:
 ```
 
@@ -109,14 +106,13 @@ if (a == b) A[4] = a - b;
 else A[4] = 0;
 ```
 ```s
-    lw x1, 0(x11)  
-    lw x2, 0(x12)
-    bne x1, x2, else
-    sub x20, x1, x2
-    sw x20, 16(x16)
-    beq x0, x0, exit
-else:
-    sw x0, 16(x16)
+        lw x1, 0(x11)  
+        lw x2, 0(x12)
+        bne x1, x2, else     #if a != b, jump to else
+        sub x20, x1, x2
+        sw x20, 16(x16)
+        beq x0, x0, exit     #jump to exit
+else:   sw x0, 16(x16)
 exit:
 ```
 
@@ -126,16 +122,15 @@ if (a != b) A[i] = a - b;
 else A[i] = 0;
 ```
 ```s
-    lw x1, 0(x11)
-    lw x2, 0(x12)
-    lw x5, 0(x15)
-    beq x1, x2, else
-    sub x20, x1, x2
-    addi x21, x5, x0
-    sw x21, 0(x16)
-    beq x0, x0, exit
-else:
-    sw x0, 0(x16)
+        lw x1, 0(x11)
+        lw x2, 0(x12)
+        lw x5, 0(x15)   
+        beq x1, x2, else      #if a == b, jump to else
+        sub x20, x1, x2
+        addi x21, x5, x0
+        sw x21, 0(x16)
+        beq x0, x0, exit      #jump to exit
+else:   sw x0, 0(x16)
 exit:
 ```
 
@@ -145,16 +140,16 @@ if (a == b) A[i] = a - b;
 else A[i] = 0;
 ```
 ```s
-    lw x1, 0(x11)
-    lw x2, 0(x12)
-    lw x5, 0(x15)
-    slli x20, x5, 2        #x20 = i * 4 bytes (size of each entry in array)
-    add x20, x20, x16      #add base address to offset (&A[0] + i * 4 = &A[i])
-    bne x1, x2, else
-    sub x21, x1, x2        #x21 = a - b
-    sw x21, 0(x20)         #A[i] = a - b (Since x20 is the address of A[i], we use offset 0)
-else:
-    sw x0, 0(x20)          #A[i] = 0
+        lw x1, 0(x11)
+        lw x2, 0(x12)
+        lw x5, 0(x15)
+        slli x20, x5, 2        #x20 = i*4 bytes (size of each entry in array)
+        add x20, x20, x16      #add base address to offset (&A[0] + i*4 = &A[i])
+        bne x1, x2, else
+        sub x21, x1, x2        #x21 = a - b
+        sw x21, 0(x20)         #A[i] = a - b (Since x20 is the address of A[i], we use offset 0)
+        beq x0, x0, exit       #jump to exit
+else:   sw x0, 0(x20)          #A[i] = 0
 exit:
 ```
 
@@ -164,7 +159,14 @@ if (A[4] != a ) A[4] = a;
 else A[4] = b;
 ```
 ```s
-
+        lw x1, 0(x11)
+        lw x20, 16(x16)         #load A[4]
+        beq x1, x20, else       #if A[4] == a, jump to else
+        sw x1, 16(x16)
+        beq x0, x0, exit
+else:   lw x2, 0(x12)
+        sw x2, 16(x16)
+exit:
 ```
 
 ## Question 10
@@ -173,7 +175,16 @@ if (A[i] == B[i] ) A[i] = 0;
 else A[i] = A[i] - B[i];
 ```
 ```s
-
+        lw x5, 0(x15)            #load i
+        slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
+        add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
+        add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
+        bne 0(x21), 0(x22), else #if A[i] != B[i], jump to else
+        sw x0, 0(x21)            #A[i] = 0 
+        beq x0, x0, exit
+else:   sub x23, 0(x21), 0(x22)  #x23 = A[i] - B[i]
+        sw x23, 0(x21)           #A[i] = A[i] - B[i]
+exit:
 ```
 
 ## Question 11
