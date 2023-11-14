@@ -137,9 +137,13 @@ sw x21, 120(x16)
 ## Question 10
 > The answers to this question have not been verified yet.
 **i = a + b**
+
 **A[i] = A[i] + a**
+
 **a = B[i]**
+
 **b = A[i]**
+
 **a += B[i-1]**
 ```s
 lw x1, 0(x11)
