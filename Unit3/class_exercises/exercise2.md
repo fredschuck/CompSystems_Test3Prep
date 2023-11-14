@@ -155,7 +155,7 @@ exit:
 
 ## Question 9
 ```c
-if (A[4] != a ) A[4] = a;
+if (A[4] != a) A[4] = a;
 else A[4] = b;
 ```
 ```s
@@ -171,7 +171,7 @@ exit:
 
 ## Question 10
 ```c
-if (A[i] == B[i] ) A[i] = 0;
+if (A[i] == B[i]) A[i] = 0;
 else A[i] = A[i] - B[i];
 ```
 ```s
@@ -194,7 +194,13 @@ for (i=0; i<100; i++) {
 }
 ```
 ```s
-
+        li x5, 0                #i = 0
+        li x23, 100             #x23 = 100 (We can use a register to hold 100 or use 100 itself)
+loop:   bge x5, x23, exit       #if i >= 100, jump to exit
+        add x1, x1, x5          #a = a + i
+        addi x5, x5, 1          #i++
+        beq x0, x0, loop        #jump to loop
+exit:
 ```
 
 ## Question 12
@@ -204,7 +210,12 @@ for (i=100; i>=0; i--) {
 }
 ```
 ```s
-
+        li x5, 100              #i = 100
+loop:   blt x5, x0, exit        #if i < 0, jump to exit
+        add x1, x1, x5          #a = a + i
+        addi x5, x5, -1         #i--
+        beq x0, x0, loop        #jump to loop
+exit:
 ```
 
 ## Question 13
@@ -214,7 +225,15 @@ for (i=0; i<100; i++) {
 }
 ```
 ```s
-
+        li x5, 0                #i = 0
+        li x23, 100             #x23 = 100
+loop:   bge x5, x23, exit       #if i >= 100, jump to exit
+        slli x20, x5, 2         #x20 = i*4 bytes (size of each entry in array)
+        add x21, x20, x16       #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
+        sw x5, 0(x21)           #A[i] = i
+        addi x5, x5, 1          #i++
+        beq x0, x0, loop        #jump to loop
+exit:
 ```
 
 ## Question 14
@@ -224,7 +243,16 @@ for (i=0; i<100; i++) {
 }
 ```
 ```s
-
+        li x5, 0                #i = 0
+        li x23, 100             #x23 = 100
+loop:   bge x5, x23, exit       #if i >= 100, jump to exit
+        slli x20, x5, 2         #x20 = i*4 bytes (size of each entry in array)
+        add x21, x20, x16       #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
+        add x22, x20, x17       #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
+        sw 0(x22), 0(x21)       #A[i] = B[i]
+        addi x5, x5, 1          #i++
+        blt x5, x23, loop       #if i < 0, jump to loop 
+exit:
 ```
 
 ## Question 15
