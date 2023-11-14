@@ -129,6 +129,22 @@ a -= b
 ## Division
 
 ## Arrays
+### Steps to obtain A[i]
+- What is the base address of A[]?         `(&A[] = x16)`
+- What the size of each entry in A[]?      `(int = 4 bytes)`
+
+1) Multiply i by the size of each entry     `(slli x20, x5, 2)`
+2) Add that value to the base address       `(add x21, x20, x16)`
+    - This is the address of A[i]
+3) Load the value from that address         `(lw x22, 0(x21))` 
+
+If we need to access A[i+2] or A[i-1], for example, we can do the following:
+1) Since we already know that `x21` holds the address of A[i], we can simply add 8 to it to get the address of A[i+2] or subtract 4 to get the address of A[i-1].
+```s
+addi x21, x21, 8     #A[i+2]
+addi x21, x21, -4    #A[i-1]
+```
+
 **A[i] = A[i] + a**
 ```s
 slli x20, x5, 2     #x20 now holds i * 4 for the offset
@@ -137,7 +153,11 @@ lw x22, 0(x21)      #Load word from A[i] to x22
 add x22, x22, x1    #A[i] + a 
 sw x22, 0(x21)      #Store back to memory for A[i]
 ```
- 
+## Loops
+
+## Conditionals
+
+
 # Unit 1
 
 ## Memory Layout of a Program
