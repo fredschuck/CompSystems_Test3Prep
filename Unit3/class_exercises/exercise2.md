@@ -92,7 +92,15 @@ if (a != b) A[4] = a - b;
 else A[4] = 0;
 ```
 ```s
-
+    lw x1, 0(x11)
+    lw x2, 0(x12)
+    beq x1, x2, else
+    sub x20, x1, x2
+    sw x20, 16(x16)
+    beq x0, x0, exit
+else:
+    sw x0, 16(x16)
+exit:
 ```
 
 ## Question 6
