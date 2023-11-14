@@ -251,7 +251,7 @@ loop:   bge x5, x23, exit       #if i >= 100, jump to exit
         add x22, x20, x17       #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
         sw 0(x22), 0(x21)       #A[i] = B[i]
         addi x5, x5, 1          #i++
-        beq x0, x0, loop       #if i < 0, jump to loop 
+        beq x0, x0, loop        #if i < 0, jump to loop 
 exit:
 ```
 
@@ -262,7 +262,18 @@ for (i=1; i<100; i++) {
 }
 ```
 ```s
-
+        li x5, 1                 #i = 1
+        li x23, 100              #x23 = 100
+loop:   bge x5, x23, exit        #if i >= 100, jump to exit
+        slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
+        add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
+        add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
+        add x23, -4(x22), 0(x22) #x23 = B[i-1] + B[i]
+        add x23, x23, 4(x22)     #x23 = B[i-1] + B[i] + B[i+1]
+        sw x23, 0(x21)           #A[i] = B[i-1] + B[i] + B[i+1]
+        addi x5, x5, 1           #i++
+        beq x0, x0, loop         #jump to loop
+exit:
 ```
 
 ## Question 16
