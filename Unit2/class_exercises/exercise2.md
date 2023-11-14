@@ -154,8 +154,6 @@ sw x21, 120(x16)
 
 **a += B[i-1]**
 
-> The answers to this question have not been verified yet.
-
 ```s
 lw x1, 0(x11)
 lw x2, 0(x12)
@@ -163,19 +161,25 @@ add x5, x1, x2
 sw x5, 0(x15)
 
 slli x20, x5, 2     #x20 now holds i * 4 for the offset
-add x21, x20, x16   #Add i to base address of A[] to get address of A[i]
+add x21, x20, x16   #Add i to base address (&) of A[] to get &A[i]
 lw x22, 0(x21)      #Load word from A[i] to x22 
-add x23, x22, x1    #A[i] + a 
-sw x23, 0(x21) 
-add x24, x16, x5
-lw x25, 0(x24)
-sw x25, 0(x11)
-sw x22, 0(x12)      #x22 currently holds A[i]  
-sub x20, x5, 1      #x20 now holds i-1
-add x26, x17, x20   #Add x20 to base address of B[] to get address of B[i-1]
-lw x27, 0(x26)      #Load word from B[i-1] to x27
-lw x1, 0(x11)       #Load a from memory to register x1
-addi x1, x27, x1    #Add the loaded word in x27 to a 
+add x22, x22, x1    #A[i] + a 
+sw x22, 0(x21)      #Store back to memory for A[i]
+
+add x21, x20, x17   #Add i to base address of B[] to get &B[i] - Remember that x20 still holds i * 4
+lw x1, 0(x21)       #Load word from B[i] to x25
+sw x1, 0(x11)       #Store back to memory for a
+
+add x21, x20, x16   #Add i * 4 to &A[] to move to &A[i] - Remember that x20 still holds i * 4
+lw x2, 0(x21)       #Load word from A[i] to b (x2)
+sw x2, 0(x12)       #Store back to memory for b
+
+addi x20, x5, -1    #x20 now holds i-1
+slli x20, x20, 2    #x20 now holds (i-1) * 4
+add x21, x20, x17   #Add (i-1) to base address of B[] to get &B[i-1]
+lw x22, 0(x21)      #Load word from B[i-1] to x22
+lw x1, 0(x11)       #Load word from a to x1
+addi x1, x22, x1    #Add the loaded word in x22 to a
 sw x1, 0(x11)       #Store back to memory for a
 ```
 
