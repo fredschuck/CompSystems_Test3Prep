@@ -65,7 +65,7 @@ else i = 0;
     beq x0, x0, exit
 else:
     sw x0, 0(x15)
-
+exit:
 ```
 
 ## Question 4
@@ -74,7 +74,16 @@ if (a>=b) a++;
 else b++;
 ```
 ```s
-
+    lw x1, 0(x11)
+    lw x2, 0(x12)
+    ble x1, x2, else
+    addi x1, x1, 1
+    sw x1, 0(x11)
+    beq x0, x0, exit
+else: 
+    addi x2, x2, 1
+    sw x2, 0(x12)
+exit:
 ```
 
 ## Question 5
