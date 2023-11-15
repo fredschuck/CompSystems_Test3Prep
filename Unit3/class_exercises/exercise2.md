@@ -242,8 +242,8 @@ for (i=0; i<100; i++) {
 loop:   
         bge x5, x23, exit       #if i >= 100, jump to exit
         slli x20, x5, 2         #x20 = i*4 bytes (size of each entry in array)
-        add x21, x20, x16       #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
-        sw x5, 0(x21)           #A[i] = i
+        add x20, x20, x16       #add base address to offset (&A[0] + i*4 = &A[i]) - x20 = &A[i]
+        sw x5, 0(x20)           #A[i] = i
         addi x5, x5, 1          #i++
         beq x0, x0, loop        #jump to loop
 exit:
