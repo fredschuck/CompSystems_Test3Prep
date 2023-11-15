@@ -58,8 +58,8 @@ Implement a program to accumulate the integer numbers from 1 to 100 using RISC-V
 .text
 main:
 	# Tests simple looping behaviour
-	li t0, 0			# sum = 0
-	li t1, 0			# i = 0
+	li t0, 0		# sum = 0
+	li t1, 0		# i = 0
 loop:
 	addi t1, t1, 5		# i++ 
 	add t0, t0, t1		# a += i
@@ -76,5 +76,22 @@ success:
 ```
 
 ## PART 3
+Implement a program to find the average of 100 integers that are randomly generated using RISC-V assembly, and simulate the assembly program execution using RARS. You should have already implemented a C program for this task in the previous lab.
+1. The program must follow the same steps as the C program you implemented before:
+	- Declare an int array of 100 elements, and use a for loop to generate 100 integers and store them in the array;
+	- Use another for loop to accumulate those numbers by reading them from the array and adding up to a variable.
+	- Calculate the average by dividing the accumulated sum with 100.
+	- Print the average and return the average. Your program should NOT do the number generation and accumulation in one loop. You must use two separate loops.
+2. You can convert the C program to RISC-V assembly or write directly the RISC-V assembly. After that, simulate its execution using RARS.
+	- To use arrays in assembly code, your code needs to reserve space in the data section.
+	- Check the memory.s file in the RARS repo (https://github.com/TheThirdOne/rars/blob/master/test/memory.s) and the previous lab for using `.space` to reserve memory for an array identified by a symbol, and how to use the `la` instruction to load the base memory address (first element of the array) to a register
 
 ## PART 4
+Implement a program to find the maximum number in an array of 100 integers that are randomly generated, using both C and RISC-V assembly, and simulate the assembly program execution using RARS. The program should follow these steps:
+1. Declare an array that has 100 elements.
+2. Use a for loop to randomly generate 100 integers and store them in the array.
+	- You should use the RandIntRange system call.
+	- See https://github.com/TheThirdOne/rars/wiki/Environment-Calls
+3. Use another for loop to find the max value in the array and return it.
+4. Write a main program in C from https://repl.it/languages/c and make sure it executes correctly. You should use an algorithm similar to the one discussed in the lecture slides to find the minimum of an array.
+5. Converting the C program to RISC-V assembly and simulating the program execution using RARS.
