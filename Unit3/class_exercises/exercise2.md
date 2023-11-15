@@ -188,11 +188,13 @@ else A[i] = A[i] - B[i];
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
-        bne 0(x21), 0(x22), else #if A[i] != B[i], jump to else
+        lw x24, 0(x21)           #x24 = A[i]
+        lw x25, 0(x22)           #x25 = B[i]
+        bne x24, x25, else #if A[i] != B[i], jump to else
         sw x0, 0(x21)            #A[i] = 0 
         beq x0, x0, exit
 else:   
-        sub x23, 0(x21), 0(x22)  #x23 = A[i] - B[i]
+        sub x23, x24, x25        #x23 = A[i] - B[i]
         sw x23, 0(x21)           #A[i] = A[i] - B[i]
 exit:
 ```
@@ -263,13 +265,14 @@ loop:
         slli x20, x5, 2         #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16       #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         add x22, x20, x17       #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
-        sw 0(x22), 0(x21)       #A[i] = B[i]
+        lw x24, 0(x22)          #x24 = B[i]
+        sw x24, 0(x21)          #A[i] = B[i]
         addi x5, x5, 1          #i++
         beq x0, x0, loop        #if i < 0, jump to loop 
 exit:
 ```
 
-## Question 15
+## Question 15 ****
 ```c
 for (i=1; i<100; i++) {
     A[i] = B[i-1] + B[i] + B[i+1];
@@ -283,8 +286,11 @@ loop:
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
-        add x23, -4(x22), 0(x22) #x23 = B[i-1] + B[i]
-        add x23, x23, 4(x22)     #x23 = B[i-1] + B[i] + B[i+1]
+        lw x24, -4(x22)          #x24 = B[i-1]
+        lw x25, 0(x22)           #x25 = B[i]
+        add x23, x24, x25        #x23 = B[i-1] + B[i]
+        lw x24, 4(x22)           #x24 = B[i+1]
+        add x23, x23, x24        #x23 = B[i-1] + B[i] + B[i+1]
         sw x23, 0(x21)           #A[i] = B[i-1] + B[i] + B[i+1]
         addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
@@ -307,7 +313,8 @@ loop:
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
-        sw 0(x22), 0(x21)        #A[i] = B[i]
+        lw x23, 0(x22)           #x22 = B[i]
+        sw x23, 0(x21)           #A[i] = B[i]
         addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
 exit:
@@ -383,6 +390,7 @@ for (i = 0; i<100; i++) {
 }
 ```
 ```s
+        lw x1, 0(x11)            #load a
         li x5, 0                 #i = 0
         li x23, 100              #x23 = 100
 loop:   
@@ -390,11 +398,13 @@ loop:
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
-        blt 0(x21), 0(x22), else #if A[i] < B[i], jump to else
-        beq 0(x21), 0(x22), else #if A[i] == B[i], jump to else
-        sw 0(x21), 0(x11)        #a = A[i]
-        sw 0(x22), 0(x21)        #A[i] = B[i]
-        sw 0(x11), 0(x22)        #B[i] = a
+        lw x24, 0(x21)           #x24 = A[i]
+        lw x25, 0(x22)           #x25 = B[i]
+        blt x24, x25, else       #if A[i] < B[i], jump to else
+        beq x24, x25, else       #if A[i] == B[i], jump to else
+        sw x24, 0(x11)           #a = A[i]
+        sw x25, 0(x21)           #A[i] = B[i]
+        sw x1, 0(x22)            #B[i] = a
         addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
 else:   
@@ -403,7 +413,7 @@ else:
 exit:
 ```
 
-## Question 20
+## Question 20 - This is not correct - need to fix
 ```c
 for (i = 0; i<100; i++) {
     if (A[i] > B[i]) {
@@ -433,7 +443,7 @@ else:
 exit:
 ```
 
-## Question 21
+## Question 21 - This is not correct - need to fix
 ```c
 // Find the max
 a = A[0];
