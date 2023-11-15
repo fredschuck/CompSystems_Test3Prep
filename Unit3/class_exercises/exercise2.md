@@ -130,14 +130,14 @@ else A[i] = 0;
         lw x1, 0(x11)
         lw x2, 0(x12)
         lw x5, 0(x15)   
-        slli x21, x5, 2       #x21 = i*4 bytes (size of each entry in array)
-        addi x21, x21, x16    #x21 = &A[i]
+        slli x20, x5, 2       #x20 = i*4 bytes (size of each entry in array)
+        addi x20, x20, x16    #x20 = &A[i]
         beq x1, x2, else      #if a == b, jump to else
-        sub x20, x1, x2
+        sub x21, x1, x2
         beq x0, x0, exit      #jump to exit
-        sw x20, 0(x21)        #A[i] = a - b
+        sw x21, 0(x20)        #A[i] = a - b
 else:   
-        sw x0, 0(x21)
+        sw x0, 0(x20)
 exit:
 ```
 
