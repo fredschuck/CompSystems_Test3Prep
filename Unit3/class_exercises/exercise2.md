@@ -134,8 +134,8 @@ else A[i] = 0;
         addi x20, x20, x16    #x20 = &A[i]
         beq x1, x2, else      #if a == b, jump to else
         sub x21, x1, x2
-        beq x0, x0, exit      #jump to exit
         sw x21, 0(x20)        #A[i] = a - b
+        beq x0, x0, exit      #jump to exit
 else:   
         sw x0, 0(x20)
 exit:
