@@ -190,7 +190,7 @@ else A[i] = A[i] - B[i];
         add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
         lw x24, 0(x21)           #x24 = A[i]
         lw x25, 0(x22)           #x25 = B[i]
-        bne x24, x25, else #if A[i] != B[i], jump to else
+        bne x24, x25, else       #if A[i] != B[i], jump to else
         sw x0, 0(x21)            #A[i] = 0 
         beq x0, x0, exit
 else:   
@@ -372,7 +372,7 @@ loop:
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         lw x22, 0(x21)           #x22 = A[i]
-        beq x22, x1, break        #if A[i] == a, jump to break
+        beq x22, x1, break       #if A[i] == a, jump to break
         addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
 break:
