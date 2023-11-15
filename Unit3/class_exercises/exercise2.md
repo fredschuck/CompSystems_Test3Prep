@@ -413,7 +413,7 @@ else:
 exit:
 ```
 
-## Question 20 - This is not correct - need to fix
+## Question 20
 ```c
 for (i = 0; i<100; i++) {
     if (A[i] > B[i]) {
@@ -429,21 +429,23 @@ loop:
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
         add x22, x20, x17        #add base address to offset (&B[0] + i*4 = &B[i]) - x22 = &B[i]
-        blt 0(x21), 0(x22), else #if A[i] < B[i], jump to else
-        beq 0(x21), 0(x22), else #if A[i] == B[i], jump to else
-        sub x24, 0(x21), 0(x22)  #x23 = A[i] - B[i]
+        lw x25, 0(x21)           #x25 = A[i]
+        lw x26, 0(x22)           #x26 = B[i]
+        blt x25, x26, else       #if A[i] < B[i], jump to else
+        beq x25, x26, else       #if A[i] == B[i], jump to else
+        sub x24, x25, x26        #x24 = A[i] - B[i]
         sw x24, 0(x21)           #A[i] = A[i] - B[i]
         addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
 else:   
-        sub x24, 0(x22), 0(x21)  #x23 = B[i] - A[i]
+        sub x24, x26, x25        #x24 = B[i] - A[i]
         sw x24, 0(x21)           #A[i] = B[i] - A[i]
         addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
 exit:
 ```
 
-## Question 21 - This is not correct - need to fix
+## Question 21
 ```c
 // Find the max
 a = A[0];
@@ -452,16 +454,19 @@ for (i=0; i<100; i++) {
 }
 ```
 ```s
-        sw 0(x16), 0(x11)        #a = A[0]
+        lw x22, 0(x16)           #x22 = A[0]
+        sw x22, 0(x11)           #a = A[0]
         li x5, 0                 #i = 0
         li x23, 100              #x23 = 100
+        lw x1, 0(x11)            #load a
 loop:   
         bge x5, x23, exit        #if i >= 100, jump to exit
         slli x20, x5, 2          #x20 = i*4 bytes (size of each entry in array)
         add x21, x20, x16        #add base address to offset (&A[0] + i*4 = &A[i]) - x21 = &A[i]
-        blt 0(x21), 0(x11), else #if A[i] < a, jump to else
-        beq 0(x21), 0(x11), else #if A[i] == a, jump to else
-        sw 0(x21), 0(x11)        #a = A[i]
+        lw x23, 0(x21)           #x23 = A[i]
+        blt x23, x1, else        #if A[i] < a, jump to else
+        beq x23, x1, else        #if A[i] == a, jump to else
+        sw x23, 0(x11)           #a = A[i]
         addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
 else:   
