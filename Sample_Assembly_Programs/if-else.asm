@@ -6,9 +6,9 @@ Main:
 	addi x21, x0, 8		# h = 8
 	addi x22, x0, 5		# i = 5
 	addi x23, x0, 5	# j = 10
-	bne x22, x23, Else 	# branch if not equal      
-	add x19, x20, x21   # Then path      
-	beq x0, x0, Exit    # unconditionalbranch
+	bne x22, x23, Else 	# branch if not equal       
+	add x19, x20, x21   # Then path       
+	beq x0, x0, Exit    # unconditional branch
 Else: 
 	sub x19, x20, x21	# Else path 
 Exit:
