@@ -404,6 +404,7 @@ loop:
         beq x24, x25, else       #if A[i] == B[i], jump to else
         sw x24, 0(x11)           #a = A[i]
         sw x25, 0(x21)           #A[i] = B[i]
+        lw x1, 0(x11)            #load again because we changed it
         sw x1, 0(x22)            #B[i] = a
         addi x5, x5, 1           #i++
         beq x0, x0, loop         #jump to loop
