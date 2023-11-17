@@ -177,6 +177,7 @@ exit:
 ```
 
 # Unit 1
+[Knowledge Check](Unit1/quizzes/knowledge_check.md)
 
 ## Memory Layout of a Program
 <!-- Discuss where memory is stored. For example, the memory for an array's elements is stored in stack. Dynamically allocated memory using malloc is in heap. -->
@@ -225,6 +226,7 @@ exit:
 
 
 # Unit 2
+[Knowledge Check](Unit2/quizzes/knowledge_check.md)
 
 ## Load-Store Architecture
 [Load-Store Architecture](https://en.wikipedia.org/wiki/Load–store_architecture)
@@ -269,6 +271,9 @@ exit:
 - SRAM is faster than DRAM
 - The DRAM frequency is measured in megahertz (MHz) and indicates how many cycles the DRAM can perform in one second.
 - Actual data transfer speed within the DRAM is about **half** of the stated **frequency**.
+
+# Unit 3
+[Knowledge Check](Unit3/quizzes/knowledge_check.md)
 
 # Other Resources
 - [Environment Calls](https://github.com/TheThirdOne/rars/wiki/Environment-Calls)
