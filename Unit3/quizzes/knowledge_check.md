@@ -8,7 +8,7 @@
     - [x] A label may be referenced by control flow statements appearing elsewhere in the source code.
 3) A label used in a program has effects on the actual execution of a program.
     - [ ] True
-    - [x] **False**
+    - [x] **False** (Labels just indicate locations in the code and have no effect on the execution of the program.)
 4) For the following statements, which one(s) are the control flow statements?
     - [x] while loop
     - [x] switch-case
