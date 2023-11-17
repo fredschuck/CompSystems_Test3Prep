@@ -54,24 +54,25 @@ Implement a program to accumulate the integer numbers from 1 to 100 using RISC-V
 2. To print the result and return the result, your program should make an environment call `PrintInt`, check [Environment Calls](https://github.com/TheThirdOne/rars/wiki/Environment-Calls).
 
 ```s
- .globl main
+.globl main
+.data
+sum: .space 4
 .text
 main:
-	# Tests simple looping behaviour
-	li t0, 0		# sum = 0
-	li t1, 0		# i = 0
+	la t0, sum		# load sum
+	li t1, 0 		# t1 += 0
+	sw t1, 0(t0)	# store sum
+	li t2, 0		# i = 0
+	li t3, 101		# a = 101
 loop:
-	addi t1, t1, 5		# i++ 
-	add t0, t0, t1		# a += i
-	bne t1, t0, loop  	# if i != a, go to loop
-	bne t1, zero, success	# if i == 0, go to success
-failure:
-	li a0, 0
-	li a7, 93 
-	ecall
-success:
-	li a0, 42 
-	li a7, 93
+	bge t2, t3, exit		# if i >= a, go to exit
+	add t1, t1, t2			# sum += i
+	sw t1, 0(t0)			# store sum
+	addi t2, t2, 1			# i++ 
+	beq x0, x0, loop		# if i == a, go to loop
+exit:
+	lw a0, 0(t0)	# load sum
+	li a7, 1 
 	ecall
 ```
 
@@ -86,6 +87,53 @@ Implement a program to find the average of 100 integers that are randomly genera
 	- To use arrays in assembly code, your code needs to reserve space in the data section.
 	- Check the memory.s file in the RARS repo (https://github.com/TheThirdOne/rars/blob/master/test/memory.s) and the previous lab for using `.space` to reserve memory for an array identified by a symbol, and how to use the `la` instruction to load the base memory address (first element of the array) to a register
 
+```s
+.data
+arr: .space 400
+sum: .space 4
+avg: .space 4
+.text
+main:
+    la s0, arr			# s0 = &arr[0] - load arr
+    la s1, sum			# s1 = &sum    - load sum
+    la s2, avg 			# s2 = &avg    - load avg
+	li s3, 0 			# s3 = sum
+    li s4, 0 			# s4 = avg
+	add s5, s0, x0		# s5 = array pointer
+    li t0, 0 			# t0 = loop variable (i)
+	li t2, 100			# t2 = loop upper limit (a)
+    li t3, 100			# t3 = size of array (b)
+load: # --------------- load inserts random numbers into array
+	bge t0, t2, reset	# if i >= a, go to exit
+	li a0, 0			
+	li a1, 100			
+	li a7, 42			# RandomIntRange system call
+	ecall				
+	sw a0, 0(s5)		# store random number in array
+	addi s5, s5, 4		# shift pointer to next array element	
+	addi t0, t0, 1 		# i++
+	beq x0, x0, load	# go to load
+reset: # ---------------- reset array pointer and loop variable
+	add s5, s0, x0		# reset pointer to arr[0]
+	add t0, x0, x0		# reset i
+add: # ------------------ sum all elements in array
+	bge t0, t2, average	# if i >= a, go to exit
+	lw t1, 0(s5)		# t1 = arr[i]
+	add s3, s3, t1		# sum += arr[i]
+	sw s3, 0(s1)		# store sum
+	addi s5, s5, 4		# shift pointer to next array element
+	addi t0, t0, 1		# i++
+	beq x0, x0, add	    # go to sum
+average: # -------------- calculate average
+	div s4, s3, t3		# avg = sum / 100
+	sw s4, 0(s2)		# store avg
+exit: # ----------------- print avg and exit
+	lw a0, 0(s2)
+	li a7,1
+	ecall
+```
+
+
 ## PART 4
 Implement a program to find the maximum number in an array of 100 integers that are randomly generated, using both C and RISC-V assembly, and simulate the assembly program execution using RARS. The program should follow these steps:
 1. Declare an array that has 100 elements.
@@ -95,3 +143,54 @@ Implement a program to find the maximum number in an array of 100 integers that 
 3. Use another for loop to find the max value in the array and return it.
 4. Write a main program in C from https://repl.it/languages/c and make sure it executes correctly. You should use an algorithm similar to the one discussed in the lecture slides to find the minimum of an array.
 5. Converting the C program to RISC-V assembly and simulating the program execution using RARS.
+
+```s
+.data
+arr: .space 400
+max: .space 4
+temp: .space 4
+.text
+main:
+    la s0, arr			# s0 = &arr[0] - load arr
+    la s1, max			# s1 = &max    - load max
+    la s2, temp 		# s2 = &temp   - load temp
+	li s3, 0 			# s3 = sum
+    li s4, 0 			# s4 = temp
+	li s6, 0			# s6 = max
+	add s5, s0, x0		# s5 = array pointer
+    li t0, 0 			# t0 = loop variable (i)
+	li t1, 100			# t1 = loop upper limit (a)
+load: # --------------- load inserts random numbers into array
+	bge t0, t1, reset	# if i >= a, go to exit
+	li a0, 0			
+	li a1, 100			
+	li a7, 42			# RandomIntRange system call
+	ecall				
+	sw a0, 0(s5)		# store random number in array
+	addi s5, s5, 4		# shift pointer to next array element	
+	addi t0, t0, 1 		# i++
+	beq x0, x0, load	# go to load
+reset: # ---------------- reset array pointer and loop variable
+	add s5, s0, x0		# reset pointer to arr[0]
+	add t0, x0, x0		# reset i
+loop: # ----------------- find max element in array
+	bge t0, t1, exit	# if i >= a, go to exit
+	lw t2, 0(s5)		# t2 = arr[i]
+	add s4, t2, x0		# temp = arr[i]
+	sw s4, 0(s2)		# store temp
+	bgt s4, s6, update	# if temp > max, go to update
+	addi s5, s5, 4		# shift pointer to next array element
+	addi t0, t0, 1		# i++
+	beq x0, x0, loop	# go to loop
+update: # --------------- max = temp
+	lw s6, 0(s2)		# max = temp
+	sw s6, 0(s1)		# store max
+	bge t0, t1, exit	# if i >= a, go to exit
+	addi s5, s5, 4		# shift pointer to next array element
+	addi t0, t0, 1		# i++
+	beq x0, x0, loop	# go to loop
+exit: # ----------------- print max and exit
+	lw a0, 0(s1)
+	li a7,1
+	ecall
+```
