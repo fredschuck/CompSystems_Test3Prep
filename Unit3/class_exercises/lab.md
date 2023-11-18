@@ -72,7 +72,7 @@ loop:
 	beq x0, x0, loop		# if i == a, go to loop
 exit:
 	lw a0, 0(t0)	# load sum
-	li a7, 1 
+	li a7, 1 		# PrintInt system call
 	ecall
 ```
 
@@ -178,11 +178,11 @@ loop: # ----------------- find max element in array
 	lw t2, 0(s5)		# t2 = arr[i]
 	add s4, t2, x0		# temp = arr[i]
 	sw s4, 0(s2)		# store temp
-	bgt s4, s6, update	# if temp > max, go to update
+	blt s6, s4, update	# if max < temp, go to update
 	addi s5, s5, 4		# shift pointer to next array element
 	addi t0, t0, 1		# i++
 	beq x0, x0, loop	# go to loop
-update: # --------------- max = temp
+update: # --------------- update max
 	lw s6, 0(s2)		# max = temp
 	sw s6, 0(s1)		# store max
 	bge t0, t1, exit	# if i >= a, go to exit
@@ -190,6 +190,78 @@ update: # --------------- max = temp
 	addi t0, t0, 1		# i++
 	beq x0, x0, loop	# go to loop
 exit: # ----------------- print max and exit
+	lw a0, 0(s1)
+	li a7,1
+	ecall
+```
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main (void) {
+    int arr[100];
+    int min = 100;
+    int temp = 0;
+    srand(time(NULL));
+    // load array with random numbers
+    for (int i = 0; i < 100; i++) {
+        arr[i] = rand() % 101;
+    }
+    // find minimum
+    for (int i = 0; i < 100; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        }
+    }
+    printf("%d\n", min);
+    return 0;
+}
+```
+
+```s
+.data
+arr: .space 400
+min: .space 4
+temp: .space 4
+.text
+main:
+    la s0, arr			# s0 = &arr[0] - load arr
+    la s1, min			# s1 = &min    - load min
+	li s2, 100			# s2 = min
+	sw s2, 0(s1)		# store min
+	add s3, s0, x0		# s3 = array pointer
+    li t0, 0 			# t0 = loop variable (i)
+	li t1, 100			# t1 = loop upper limit (a)
+load: # --------------- load inserts random numbers into array
+	bge t0, t1, reset	# if i >= a, go to exit
+	li a0, 1			
+	li a1, 100			
+	li a7, 42			# RandomIntRange system call
+	ecall				
+	sw a0, 0(s3)		# store random number in array
+	addi s3, s3, 4		# shift pointer to next array element	
+	addi t0, t0, 1 		# i++
+	beq x0, x0, load	# go to load
+reset: # ---------------- reset array pointer and loop variable
+	add s3, s0, x0		# reset pointer to arr[0]
+	add t0, x0, x0		# reset i
+loop: # ----------------- find min element in array
+	bge t0, t1, exit	# if i >= a, go to exit
+	lw s2, 0(s1)		# s2 = min
+	lw t2, 0(s3)		# t2 = arr[i]
+	blt t2, s2, update	# if t2 < min, go to update
+	addi s3, s3, 4		# shift pointer to next array element
+	addi t0, t0, 1		# i++
+	beq x0, x0, loop	# go to loop
+update: # --------------- update min
+	sw t2, 0(s1)		# store min
+	bge t0, t1, exit	# if i >= a, go to exit
+	addi s3, s3, 4		# shift pointer to next array element
+	addi t0, t0, 1		# i++
+	beq x0, x0, loop	# go to loop
+exit: # ----------------- print min and exit
 	lw a0, 0(s1)
 	li a7,1
 	ecall
