@@ -202,24 +202,25 @@ exit: # ----------------- print max and exit
 
 int main (void) {
     int arr[100];
-    int min = 100;
-    int temp = 0;
+    int max = 0;
     srand(time(NULL));
     // load array with random numbers
     for (int i = 0; i < 100; i++) {
         arr[i] = rand() % 101;
     }
-    // find minimum
+    // find maximum
     for (int i = 0; i < 100; i++) {
-        if (arr[i] < min) {
-            min = arr[i];
+        if (arr[i] > max) {
+            max = arr[i];
         }
     }
-    printf("%d\n", min);
+    printf("%d\n", max);
     return 0;
 }
 ```
 
+
+### Find Min (Not needed)
 ```s
 .data
 arr: .space 400
